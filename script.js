@@ -7,27 +7,38 @@ const displayHSLValue = document.querySelector(".color-container:nth-child(3) p 
 
 function getHexColor() {
   const selectedHexColor = this.value;
-  console.log(selectedHexColor);
+  showSelectedColor(selectedHexColor);
+}
 
-  showHexColor(selectedHexColor);
-  hexToRGB(selectedHexColor);
+function showSelectedColor(hexColor) {
+  const rgb = hexToRGB(hexColor);
+  const hsl = rgbToHsl(rgb);
+  const cssRGB = rgbToCSS(rgb);
+
+  console.log("hex", hexColor);
+  console.log("rgb", rgb);
+  console.log("hsl", hsl);
+  console.log("css-rgb", cssRGB);
+  console.log("\n");
+
+  showRGB(rgb, cssRGB);
+  showHex(hexColor);
+  showHSL(hsl);
 }
 
 function hexToRGB(hexColor) {
-  let red = hexColor.substring(1, 3);
-  let green = hexColor.substring(3, 5);
-  let blue = hexColor.substring(5, 7);
+  const red = Number.parseInt(hexColor.substring(1, 3), 16);
+  const green = Number.parseInt(hexColor.substring(3, 5), 16);
+  const blue = Number.parseInt(hexColor.substring(5, 7), 16);
 
-  red = Number.parseInt(red, 16);
-  green = Number.parseInt(green, 16);
-  blue = Number.parseInt(blue, 16);
-  console.log({ red, green, blue });
-
-  showRGBText(red, green, blue);
-  rgbToHsl(red, green, blue);
+  return { red, green, blue };
 }
 
-function rgbToHsl(r, g, b) {
+function rgbToHsl(rgb) {
+  let r = rgb.red;
+  let g = rgb.green;
+  let b = rgb.blue;
+
   r /= 255;
   g /= 255;
   b /= 255;
@@ -62,23 +73,27 @@ function rgbToHsl(r, g, b) {
   s *= 100;
   l *= 100;
 
-  h = h.toFixed(2);
-  s = s.toFixed(2);
-  l = l.toFixed(2);
+  h = h.toFixed();
+  s = s.toFixed();
+  l = l.toFixed();
 
-  console.log({ h, s, l }); // just for testing
-  showHSLText(h, s, l);
+  return { h, s, l };
 }
 
-function showHexColor(hexColor) {
+function rgbToCSS(rgb) {
+  const cssValue = `rgb(${rgb.red}, ${rgb.green}, ${rgb.blue})`;
+  return cssValue;
+}
+
+function showHex(hexColor) {
   displayHexValue.textContent = `hex: ${hexColor}`;
-  document.querySelector(".color3").style.backgroundColor = hexColor;
 }
 
-function showRGBText(red, green, blue) {
-  displayRGBValue.textContent = `rgb (${red}, ${green}, ${blue})`;
+function showRGB(rgb, cssRGB) {
+  displayRGBValue.textContent = `rgb (${rgb.red}, ${rgb.green}, ${rgb.blue})`;
+  document.querySelector(".color3").style.backgroundColor = cssRGB;
 }
 
-function showHSLText(h, s, l) {
-  displayHSLValue.textContent = `hsl (${h}, ${s}, ${l})`;
+function showHSL(hsl) {
+  displayHSLValue.textContent = `hsl (${hsl.h}, ${hsl.s}, ${hsl.l})`;
 }
