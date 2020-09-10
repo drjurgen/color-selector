@@ -3,16 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>11C.03.02 - Improved Color selector</title>
+    <title>11C.03.04 - Color Palette Designer</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <main>
-      <div id="color-selector">
-        <label>Select Color: </label>
-        <input type="color" />
-      </div>
-
       <div id="colors">
         <div class="color-container">
           <div class="color color1"></div>
@@ -43,6 +38,44 @@
           <p>hex: ???</p>
           <p>rgb: ???</p>
           <p>hsl: ???</p>
+        </div>
+      </div>
+
+      <div id="color-selector">
+        <label>Select Color: </label>
+        <input type="color" />
+      </div>
+
+      <div id="harmony-selector">
+        <div><h2>Select Harmony:</h2></div>
+
+        <div>
+          <input type="radio" id="analogous" name="harmony" value="analogous" checked />
+          <label for="analogous">Analogous</label>
+        </div>
+
+        <div>
+          <input type="radio" id="monochromatic" name="harmony" value="monochromatic" />
+          <label for="monochromatic">Monochromatic</label>
+        </div>
+        <div>
+          <input type="radio" id="triad" name="harmony" value="triad" />
+          <label for="triad">Triad</label>
+        </div>
+
+        <div>
+          <input type="radio" id="complementary" name="harmony" value="complementary" />
+          <label for="complementary">Complementary</label>
+        </div>
+
+        <div>
+          <input type="radio" id="compound" name="harmony" value="compound" />
+          <label for="compound">Compound</label>
+        </div>
+
+        <div>
+          <input type="radio" id="shades" name="harmony" value="shades" />
+          <label for="shades">Shades</label>
         </div>
       </div>
     </main>
