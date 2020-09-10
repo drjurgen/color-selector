@@ -209,9 +209,9 @@ function validateHarmony(harmonyArray) {
     }
 
     if (hsl.l < 0) {
-      hsl.l -= 100;
+      hsl.l -= 0 + hsl.l;
     } else if (hsl.l > 100) {
-      hsl.l += 100;
+      hsl.l -= hsl.l - 100;
     }
   });
 

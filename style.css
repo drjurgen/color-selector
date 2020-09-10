@@ -11,7 +11,7 @@ main {
   width: 100vw;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   align-items: center;
   justify-content: flex-start;
 }
@@ -20,7 +20,8 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 20px;
+  order: 1;
 }
 
 #color-selector input {
@@ -31,17 +32,20 @@ main {
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  flex-direction: column;
   width: 100%;
-  margin-top: 50px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .color-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 19%;
-  margin: 0 5px;
+  width: 90%;
+  margin: 5px 5%;
   border: 3px solid #333;
+  border-radius: 15px;
 }
 
 .color-container p {
@@ -54,9 +58,12 @@ main {
 
 .color {
   width: 100%;
-  height: 20vw;
+  height: 15vw;
   border-bottom: 3px solid #333;
   background-color: #f0f0f0;
+  border-radius: 10px 10px 0 0;
+  margin-bottom: 10px;
+  z-index: -1;
 }
 
 #color-selector input {
@@ -75,9 +82,8 @@ input:focus {
 #harmony-selector {
   display: flex;
   flex-direction: column;
-  /* flex-wrap: wrap; */
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 30px;
   padding-left: 20px;
 }
 
@@ -88,4 +94,73 @@ input:focus {
 #harmony-selector div h2 {
   margin: 0;
   text-align: center;
+}
+
+#harmony-selector div input {
+  transition: all 0.2s ease-in;
+  cursor: pointer;
+}
+
+#harmony-selector div input:hover {
+  transform: scale(1.2);
+}
+
+#harmony-selector div label {
+  cursor: pointer;
+}
+
+@media only screen and (min-width: 820px) {
+  main {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  #colors {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: row;
+    width: 100%;
+    margin-top: 50px;
+    margin-bottom: 0;
+  }
+
+  .color-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 19%;
+    margin: 0 5px;
+    border: 3px solid #333;
+    border-radius: 5%;
+  }
+
+  .color-container p {
+    padding: 0 10px;
+  }
+
+  .color-container p {
+    margin: 5px 0;
+  }
+
+  .color {
+    width: 100%;
+    height: 15vw;
+    border-bottom: 3px solid #333;
+    background-color: #f0f0f0;
+    border-radius: 5% 5% 0 0;
+    margin-bottom: 10px;
+  }
+
+  #color-selector {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    order: 0;
+  }
 }
