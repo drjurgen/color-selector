@@ -1,14 +1,15 @@
 "use strict";
-document.addEventListener("DOMContentLoaded", randomColor);
+document.addEventListener("DOMContentLoaded", randomColor); // Make random color when loaded
 document.querySelector("input").addEventListener("input", getHexColor);
 
 document.querySelectorAll("#harmony-selector input").forEach((button) => {
-  button.addEventListener("click", getSelectedHarmony);
+  button.addEventListener("click", getSelectedHarmony); // Trigger function when one harmony is clicked
 });
 
-let selectedHarmony = "analogous";
-let globalBaseHSL;
+let selectedHarmony = "analogous"; // Default value for selected harmony
+let globalBaseHSL; // Variable to retrigger color palette calculations
 
+// Make a random base color in RGB, convert it to hex
 function randomColor() {
   const r = Math.floor(Math.random() * 255);
   const g = Math.floor(Math.random() * 255);
@@ -18,11 +19,13 @@ function randomColor() {
   showSelectedColor(hexColor);
 }
 
+// Get selected hex-color from the color-picker
 function getHexColor() {
   const selectedHexColor = this.value;
   showSelectedColor(selectedHexColor);
 }
 
+// Convert the picked hex-color to rgb and hsl + send it to showHarmony
 function showSelectedColor(hexColor) {
   const rgb = hexToRGB(hexColor);
   const hsl = rgbToHsl(rgb);
@@ -35,6 +38,7 @@ function showSelectedColor(hexColor) {
   showSelectedHarmony(hsl);
 }
 
+// Convert hex-color to rgb
 function hexToRGB(hexColor) {
   const red = Number.parseInt(hexColor.substring(1, 3), 16);
   const green = Number.parseInt(hexColor.substring(3, 5), 16);
@@ -43,6 +47,7 @@ function hexToRGB(hexColor) {
   return { red, green, blue };
 }
 
+// Convert rgb to hsl
 function rgbToHsl(rgb) {
   let r = rgb.red;
   let g = rgb.green;
@@ -89,11 +94,14 @@ function rgbToHsl(rgb) {
   return { h, s, l };
 }
 
+// Convert rgb to css-string
 function rgbToCSS(rgb) {
   const cssValue = `rgb(${rgb.red}, ${rgb.green}, ${rgb.blue})`;
   return cssValue;
 }
 
+// Makes array of harmony hsl's based on the baseHSL and sends it to calcSelectedHarmony
+// When newly calculated array is returned, then the function sends the variable to showColors
 function showSelectedHarmony(baseHSL) {
   globalBaseHSL = baseHSL;
   const harmonyArray = [
@@ -111,17 +119,20 @@ function showSelectedHarmony(baseHSL) {
   console.log("\n");
 }
 
+// Gets the correctly clicked harmony and asigns its value to a variable
 function getSelectedHarmony() {
   selectedHarmony = this.value;
   console.log(selectedHarmony);
   updateHarmony();
 }
 
+// Retriggers the showHarmony, so it updates the shown color palette
 function updateHarmony() {
   console.log(globalBaseHSL);
   showSelectedHarmony(globalBaseHSL);
 }
 
+// Checks which harmony was clicked and triggers the corresponding function
 function calcSelectedHarmony(harmonyArray) {
   const baseHSL = harmonyArray[2];
   if (selectedHarmony === "analogous") {
@@ -140,6 +151,7 @@ function calcSelectedHarmony(harmonyArray) {
   return harmonyArray;
 }
 
+// Calculates Analogous harmony
 function calcAnalogous(harmonyArray, baseHSL) {
   harmonyArray[0].h = baseHSL.h - 50;
   harmonyArray[1].h = baseHSL.h - 25;
@@ -149,6 +161,7 @@ function calcAnalogous(harmonyArray, baseHSL) {
   return harmonyArray;
 }
 
+// Calculates monochromatic harmony
 function calcMonochromatic(harmonyArray, baseHSL) {
   harmonyArray[0].s = baseHSL.s - 30;
   harmonyArray[1].s = baseHSL.s - 15;
@@ -158,6 +171,7 @@ function calcMonochromatic(harmonyArray, baseHSL) {
   return harmonyArray;
 }
 
+// Calculates triad harmony
 function calcTriad(harmonyArray, baseHSL) {
   harmonyArray[0].h = baseHSL.h - 60;
   harmonyArray[1].h = baseHSL.h - 60;
@@ -167,6 +181,7 @@ function calcTriad(harmonyArray, baseHSL) {
   return harmonyArray;
 }
 
+// Calculates complementary harmony
 function calcComplementary(harmonyArray, baseHSL) {
   harmonyArray[0].h = baseHSL.h + 180;
   harmonyArray[1].h = baseHSL.h + 180;
@@ -176,6 +191,7 @@ function calcComplementary(harmonyArray, baseHSL) {
   return harmonyArray;
 }
 
+// Calculates compound harmony
 function calcCompound(harmonyArray, baseHSL) {
   harmonyArray[0].h = baseHSL.h - 50;
   harmonyArray[1].h = baseHSL.h + 180;
@@ -185,6 +201,7 @@ function calcCompound(harmonyArray, baseHSL) {
   return harmonyArray;
 }
 
+// Calculates shades harmony
 function calcShades(harmonyArray, baseHSL) {
   harmonyArray[0].l = baseHSL.l - 35;
   harmonyArray[1].l = baseHSL.l - 15;
@@ -194,6 +211,8 @@ function calcShades(harmonyArray, baseHSL) {
   return harmonyArray;
 }
 
+// Checks if h is higher than 360 or lower than 0 and corrects the value
+// Also checks if s or l is higher than 100 or lower than 0 and corrects the value
 function validateHarmony(harmonyArray) {
   harmonyArray.forEach((hsl) => {
     if (hsl.h < 0) {
@@ -218,18 +237,21 @@ function validateHarmony(harmonyArray) {
   // TODO: check if h is between 0 and 360 and if s,l is between 0 and 100
 }
 
+// Each hsl-object triggers showColor function
 function showColors(calcHarmonyArray) {
   calcHarmonyArray.forEach((hslObject) => {
     showColor(calcHarmonyArray, hslObject);
   });
 }
 
+// Calculates hsl back to rgb and hex and triggers the displayHarmony
 function showColor(calcHarmonyArray, hsl) {
   const rgb = hslToRGB(hsl);
   const hex = rgbToHex(rgb);
   displayHarmony(calcHarmonyArray, hsl, rgb, hex);
 }
 
+// Converts HSL to RGB
 function hslToRGB(hsl) {
   let h = hsl.h;
   let s = hsl.s;
@@ -275,6 +297,7 @@ function hslToRGB(hsl) {
   return { r, g, b };
 }
 
+// Converts RGB to Hex
 function rgbToHex(rgb) {
   const r = rgb.r.toString(16).padStart(2, "0");
   const g = rgb.g.toString(16).padStart(2, "0");
@@ -284,6 +307,7 @@ function rgbToHex(rgb) {
   return hexColor;
 }
 
+// Displays the chosen harmony and their corresponding hsl, rgb and hex values
 function displayHarmony(calcHarmonyArray, hsl, rgb, hex) {
   const colorBox = document.querySelector(".color-container:nth-child(" + (calcHarmonyArray.indexOf(hsl) + 1) + ") .color");
   const hexText = document.querySelector(".color-container:nth-child(" + (calcHarmonyArray.indexOf(hsl) + 1) + ") p");
